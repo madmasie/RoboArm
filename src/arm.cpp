@@ -1,0 +1,84 @@
+#include <Servo.h>
+#include <Ramp.h>
+
+#define BASESERVOPIN A0
+#define ARM1SERVOPIN A1
+#define ARM2SERVOPIN A2
+#define GRIPSERVOPIN A3
+
+Servo arm1servo;
+Servo arm2servo;
+Servo baseservo;
+Servo gripservo;
+
+
+rampDouble arm1ramp;
+rampDouble arm2ramp;
+rampDouble baseramp;
+rampDouble gripramp;
+ 
+//moveToAngle specifies the angles for each servo
+void moveToAngle(double b, double a1, double a2, double g) {
+  arm1servo.write(a1);
+  arm2servo.write(a2);
+  baseservo.write(b);
+  gripservo.write(g);
+}
+
+//rampToAngle ramps the angles to the specified values over a given time
+//b = base angle, a1 = arm1 angle, a2 = arm2 angle,
+// g = grip angle, t = time in milliseconds
+void rampToAngle(double b, double a1, double a2, double g, unsigned long t) {
+  arm1ramp.go(a1,t, LINEAR, ONCEFORWARD);
+  arm2ramp.go(a2,t, LINEAR, ONCEFORWARD);
+  baseramp.go(b,t, LINEAR, ONCEFORWARD);
+  gripramp.go(g,t, LINEAR, ONCEFORWARD);
+  
+  // Wait until all ramps are finished before moving servos
+  while (baseramp.isRunning()) {
+    moveToAngle(baseramp.update(),arm1ramp.update(),arm2ramp.update(),gripramp.update());
+  }
+}
+
+//.attach the Servo variables to the pins in setup()
+//servo.attach(pin, min, max) where min and max are the pulse widths in microseconds
+//for the minimum and maximum angles of the servo
+void setup() {
+  baseservo.attach(BASESERVOPIN,440 ,2400);
+  arm1servo.attach(ARM1SERVOPIN,440 ,2400);
+  arm2servo.attach(ARM2SERVOPIN,440 ,2400);
+  gripservo.attach(GRIPSERVOPIN,440 ,2400);
+  
+}
+
+void loop() {
+  // you will need to change the coordinates in each of the lines below to ones which work for your arm
+  // please use the encoder_arm sketch and serial console to find these out
+  
+  //move above ball
+  //rampToAngle(base angle, arm1 angle, arm2 angle, grip angle, time in milliseconds)
+  rampToAngle(105,129,56,30,3000);
+  rampToAngle(120,129,56,0,2000);
+  rampToAngle(150,129,56,90,8000);
+
+  // //lower onto ball
+  // rampToAngle(105,132,50,90,500);
+  // //close hand
+  // rampToAngle(107,133,47,72,500);
+  // //middle-ish
+  // rampToAngle(121,101,113,72,500);
+  // //move over hopper
+  // rampToAngle(169,127,121,72,1000);
+  // //move down
+  // rampToAngle(169,128,113,72,500);
+  
+  // //open hand
+  // rampToAngle(169,128,113,90,500);
+
+  // //move over hopper
+  // rampToAngle(169,128,113,90,500);
+
+  // //middle-ish
+  // rampToAngle(121,101,113,90,1000);
+  
+}
