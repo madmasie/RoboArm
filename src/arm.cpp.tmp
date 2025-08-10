@@ -18,11 +18,12 @@ rampDouble baseramp;
 rampDouble gripramp;
  
 //moveToAngle specifies the angles for each servo
-void moveToAngle(double b, double a1, double a2, double g) {
+void moveToAngle(double b, double a1, double a2, double g ) {
   arm1servo.write(a1);
   arm2servo.write(a2);
   baseservo.write(b);
   gripservo.write(g);
+  //delay(delaytime)
 }
 
 //rampToAngle ramps the angles to the specified values over a given time
@@ -36,7 +37,10 @@ void rampToAngle(double b, double a1, double a2, double g, unsigned long t) {
   
   // Wait until all ramps are finished before moving servos
   while (baseramp.isRunning()) {
-    moveToAngle(baseramp.update(),arm1ramp.update(),arm2ramp.update(),gripramp.update());
+    moveToAngle(baseramp.update(),
+                arm1ramp.update(),
+                arm2ramp.update(),
+                gripramp.update());
   }
 }
 
