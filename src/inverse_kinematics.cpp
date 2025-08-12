@@ -1,6 +1,10 @@
 #include "inverse_kinematics.h"
 #include "servo_control.h"
 
+
+double x = 75, y = 0, z = 75;
+
+
 void moveToAngle(double b, double a1, double a2, double g) {
     arm1servo.writeMicroseconds(angleToMicroseconds(188 - a1));
     arm2servo.writeMicroseconds(angleToMicroseconds(a2 + 101));
