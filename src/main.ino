@@ -18,8 +18,8 @@ String lineBuf;
 
 Encoder myEnc(A6, A7);
 
-// Example defaults
-int baseAngle = 0;
+//default angles
+int baseAngle = 140;
 int gripAngle = 0;
 
 void setup() {
@@ -27,7 +27,7 @@ void setup() {
   arm1servo.attach(ARM1SERVOPIN, 460, 2400);
   arm2servo.attach(ARM2SERVOPIN, 460, 2400);
   gripservo.attach(GRIPSERVOPIN, 460, 2400);
-
+0+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   Serial.begin(9600);
 
   // baseservo.writeMicroseconds(angleToMicroseconds(baseAngle));
